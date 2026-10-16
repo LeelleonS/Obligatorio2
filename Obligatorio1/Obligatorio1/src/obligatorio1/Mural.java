@@ -5,12 +5,18 @@ import java.util.Objects;
 
 public class Mural {
     private String nombre;
+    private Disenador disenador;
     private String formato;
     private Ficha ficha1;
     private Ficha ficha2;
 
-    public Mural(String nombre, String formato, Ficha ficha1, Ficha ficha2) {
+    public Mural(String nombre){
         this.nombre = nombre;
+    }
+    
+    public Mural(String nombre, Disenador disenador, String formato, Ficha ficha1, Ficha ficha2) {
+        this.nombre = nombre;
+        this.disenador = disenador;
         this.formato = formato;
         this.ficha1 = ficha1;
         this.ficha2 = ficha2;
@@ -22,6 +28,14 @@ public class Mural {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Disenador getDisenador() {
+        return disenador;
+    }
+
+    public void setDisenador(Disenador disenador) {
+        this.disenador = disenador;
     }
 
     public String getFormato() {

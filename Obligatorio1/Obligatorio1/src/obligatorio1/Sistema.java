@@ -39,14 +39,33 @@ public class Sistema {
     
     public void agregarMural(Mural m){
         murales.add(m);
+        m.getDisenador().agregarMural(m);
     }
     
     public void agregarFicha (Ficha f){
         fichas.add(f);
     }
     
+    public void agregarFichas (Ficha... f){
+        for (Ficha ficha : f){
+            agregarFicha(ficha);
+        }
+    }
+    
     public boolean existeDisenador(String disenador){
         Disenador dAux = new Disenador(disenador,"","");
         return disenadores.contains(dAux);
     }
+    
+    public boolean existeFicha(String ficha){
+        Ficha fAux = new Ficha(ficha,"","","");
+        return fichas.contains(fAux);
+    }
+    
+    public boolean existeMural(String mural){
+        Mural mAux = new Mural(mural);
+        return murales.contains(mAux);  
+    }
+    
+    
 }

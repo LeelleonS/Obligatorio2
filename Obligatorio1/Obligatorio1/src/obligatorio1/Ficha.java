@@ -1,10 +1,13 @@
 package obligatorio1;
 
+import java.util.Objects;
+
 public class Ficha {
     private String nombre;
     private String color;
     private String diseno33;
     private String diseno55;
+    private String coloresValidos = "[RABNMVGC]";
 
     public Ficha(){
         
@@ -48,10 +51,31 @@ public class Ficha {
         this.diseno55 = diseno55;
     }
 
+    public String getColoresValidos() {
+        return coloresValidos;
+    }
+
+    public void setColoresValidos(String coloresValidos) {
+        this.coloresValidos = coloresValidos;
+    }
+
     @Override
     public String toString() {
         return "Ficha{" + "nombre=" + nombre + ", color=" + color + ", diseno33=" + diseno33 + ", diseno55=" + diseno55 + '}';
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        Ficha f = (Ficha)obj;
+        if (this.getNombre().equalsIgnoreCase(f.getNombre()) &&
+            this.getColor().equalsIgnoreCase(f.getColor()) && 
+            this.getDiseno33().equalsIgnoreCase(f.getDiseno33()) && 
+            this.getDiseno55().equalsIgnoreCase(f.getDiseno55())){
+            
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }
