@@ -1,17 +1,13 @@
-package obligatorio1;
+//Alumno: Leonardo Santos, Número de Estudiante: 390545
 
-import java.util.Objects;
+package obligatorio1;
 
 public class Ficha {
     private String nombre;
     private String color;
     private String diseno33;
     private String diseno55;
-    private String coloresValidos = "[RABNMVGC]";
 
-    public Ficha(){
-        
-    }
     public Ficha(String nombre, String color, String diseno33, String diseno55) {
         this.nombre = nombre;
         this.color = color;
@@ -23,58 +19,48 @@ public class Ficha {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getDiseno33() {
-        return diseno33;
-    }
-
-    public void setDiseno33(String diseno33) {
-        this.diseno33 = diseno33;
-    }
-
-    public String getDiseno55() {
-        return diseno55;
-    }
-
-    public void setDiseno55(String diseno55) {
-        this.diseno55 = diseno55;
-    }
-
-    public String getColoresValidos() {
-        return coloresValidos;
-    }
-
-    public void setColoresValidos(String coloresValidos) {
-        this.coloresValidos = coloresValidos;
-    }
-
-    @Override
-    public String toString() {
-        return "Ficha{" + "nombre=" + nombre + ", color=" + color + ", diseno33=" + diseno33 + ", diseno55=" + diseno55 + '}';
+        return this.color;
     }
 
     @Override
     public boolean equals(Object obj) {
         Ficha f = (Ficha)obj;
-        if (this.getNombre().equalsIgnoreCase(f.getNombre()) &&
-            this.getColor().equalsIgnoreCase(f.getColor()) && 
-            this.getDiseno33().equalsIgnoreCase(f.getDiseno33()) && 
-            this.getDiseno55().equalsIgnoreCase(f.getDiseno55())){
-            
-            return true;
-        }else{
-            return false;
+        return this.getNombre().equalsIgnoreCase(f.getNombre());
+    }
+    
+    public String dibujar(int tamano){
+        String dibujo = "";
+        for (int i = 0; i < tamano; i++) {
+            dibujo += this.getCodigoColor() + this.obtenerLinea(i, tamano) + "\u001B[0m\n";
+        }
+        return dibujo;
+    }
+    
+    public String obtenerLinea(int linea,int tamano){
+        String imprimir = "";
+        int inicio = linea * tamano;
+        if (tamano == 3){
+            imprimir = this.diseno33.substring(inicio,(inicio+tamano));
+        }
+        
+        if (tamano == 5){
+            imprimir = this.diseno55.substring(inicio,(inicio+tamano));
+        }
+        return imprimir.replace('.', ' ');
+    }
+    
+    public String getCodigoColor(){
+        switch (this.color) {
+            case "R": return "\u001B[31m";   // rojo
+            case "V": return "\u001B[32m";   // verde
+            case "M": return "\u001B[33m";   // amarillo
+            case "A": return "\u001B[34m";   // azul
+            case "G": return "\u001B[35m";   // magenta
+            case "C": return "\u001B[36m";   // celeste
+            case "B": return "\u001B[37m";   // blanco
+            case "N": return "\u001B[30m";   // negro
+            default:  return "";
         }
     }
     

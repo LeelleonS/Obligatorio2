@@ -1,15 +1,18 @@
+//Alumno: Leonardo Santos, Número de Estudiante: 390545
+
 package obligatorio1;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Sistema {
-    ArrayList<Disenador> disenadores;
-    ArrayList<Ficha> fichas;
-    ArrayList<Mural> murales;
+    private ArrayList<Disenador> disenadores;
+    private ArrayList<Ficha> fichas;
+    private ArrayList<Mural> murales;
 
     public Sistema(){
-        disenadores = new ArrayList();
-        fichas = new ArrayList();
-        murales = new ArrayList();
+        disenadores = new ArrayList<>();
+        fichas = new ArrayList<>();
+        murales = new ArrayList<>();
     }
     
     public ArrayList<Disenador> getDisenadores() {
@@ -20,19 +23,10 @@ public class Sistema {
         return fichas;
     }
     
-    public ArrayList<Ficha> getFichas(Ficha f){
-        return fichas;
-    }
-    
     public ArrayList<Mural> getMurales() {
         return murales;
     }
-   
-    @Override
-    public String toString() {
-        return "Sistema{" + "disenadores=" + disenadores + ", fichas=" + fichas + ", murales=" + murales + '}';
-    }
-    
+
     public void agregarDisenador(Disenador d){
         disenadores.add(d);
     }
@@ -42,13 +36,9 @@ public class Sistema {
         m.getDisenador().agregarMural(m);
     }
     
-    public void agregarFicha (Ficha f){
-        fichas.add(f);
-    }
-    
     public void agregarFichas (Ficha... f){
         for (Ficha ficha : f){
-            agregarFicha(ficha);
+            fichas.add(ficha);
         }
     }
     
@@ -67,5 +57,29 @@ public class Sistema {
         return murales.contains(mAux);  
     }
     
+    public ArrayList<Disenador> ordenarAlf(){
+        ArrayList<Disenador> ordenada = new ArrayList<>(disenadores);
+        Collections.sort(ordenada);
+        return ordenada;
+    }
     
+    public Ficha getFichaPorNombre(String nombre){
+        Ficha fAux = new Ficha(nombre,"","","");
+        return fichas.get(fichas.indexOf(fAux));
+    }
+    
+    public Ficha getFichaVacia(){
+        return getFichaPorNombre("VACIA");
+    }
+    
+    public ArrayList<Disenador> disenadoresConMurales(){
+        ArrayList<Disenador> disenadoresConMurales = new ArrayList<>();
+        for(Disenador d : disenadores){
+            if (!d.getMurales().isEmpty()){
+                disenadoresConMurales.add(d);
+            }
+        }
+        return disenadoresConMurales;
+    }
+
 }

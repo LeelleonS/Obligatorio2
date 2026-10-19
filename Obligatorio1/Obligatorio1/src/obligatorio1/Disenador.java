@@ -1,16 +1,14 @@
+//Alumno: Leonardo Santos, Número de Estudiante: 390545
+
 package obligatorio1;
 
 import java.util.ArrayList;
 
-public class Disenador {
+public class Disenador implements Comparable<Disenador>{
     private String nombre;
     private String direccion;
     private String mail;
     private ArrayList<Mural> murales;
-
-    public Disenador(){
-        
-    }
     
     public Disenador(String nombre, String direccion, String mail) {
         this.nombre = nombre;
@@ -23,26 +21,14 @@ public class Disenador {
         return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.nombre = Nombre;
-    }
-
     public String getDireccion() {
         return direccion;
-    }
-
-    public void setDireccion(String Direccion) {
-        this.direccion = Direccion;
     }
 
     public String getMail() {
         return mail;
     }
 
-    public void setMail(String Mail) {
-        this.mail = Mail;
-    }
-    
     public void agregarMural(Mural m){
         murales.add(m);
     }
@@ -54,23 +40,44 @@ public class Disenador {
     public int cantidadMurales(){
         return murales.size();
     }
-    
-    /*public int cantidadFichasDiferentes(){
-        ArrayList<Ficha> diferentes = new ArrayList<>();
-        for (Mural m : murales){
-            for (Ficha f : m.fichasUsadas())
-        }
-    }
-    */
 
+    @Override
+    public String toString(){
+        return "Nombre: " + this.getNombre() + "\nDireccion: " + this.getDireccion() + "\nMail: " + this.getMail();
+    }
+            
     @Override
     public boolean equals(Object obj) {
         Disenador d = (Disenador)obj;
         return this.getNombre().equalsIgnoreCase(d.getNombre());
     }
     
-   
-    public void registarDisenador(){
-        
+    @Override
+    public int compareTo(Disenador d){
+        return this.getNombre().compareToIgnoreCase(d.getNombre());
+    }
+    
+    public int cantidadFichasDiferentes(){
+        ArrayList<Ficha> todas = new ArrayList<>();
+        for (Mural m : murales){
+            for (Ficha f : m.fichasUsadas()){
+                if(!todas.contains(f)){
+                    todas.add(f);
+                }
+            }
+        }
+        return todas.size();
+    }
+    
+    public int cantidadColoresDiferentes(){
+        ArrayList<String> colores = new ArrayList<>();
+        for (Mural m: murales){
+            for (Ficha f : m.fichasUsadas()){
+                if(!colores.contains(f.getColor())){
+                    colores.add(f.getColor());
+                }
+            }
+        }
+        return colores.size();
     }
 }
