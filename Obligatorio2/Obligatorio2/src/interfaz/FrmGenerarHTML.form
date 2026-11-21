@@ -38,11 +38,11 @@
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="btnRutaGuardado" linkSize="1" min="-2" pref="102" max="-2" attributes="0"/>
+                          <Component id="btnBuscarRuta" linkSize="1" min="-2" pref="102" max="-2" attributes="0"/>
                           <Component id="btnAbrirArchivo" linkSize="1" min="-2" pref="102" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="lblErrorNombre" alignment="0" min="-2" pref="342" max="-2" attributes="0"/>
+                  <Component id="lblNombreError" alignment="0" min="-2" pref="342" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
           </Group>
@@ -56,13 +56,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblErrorNombre" min="-2" pref="18" max="-2" attributes="0"/>
+              <Component id="lblNombreError" min="-2" pref="18" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="lblRuta" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtRutaGuardado" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnRutaGuardado" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="btnBuscarRuta" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -75,7 +75,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnRutaGuardado">
+    <Component class="javax.swing.JButton" name="btnBuscarRuta">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="66" red="66" type="rgb"/>
@@ -96,7 +96,7 @@
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRutaGuardadoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarRutaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtRutaGuardado">
@@ -153,7 +153,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Abrir Archivo"/>
+        <Property name="text" type="java.lang.String" value="Abrir archivo"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
             <BevelBorder/>
@@ -166,7 +166,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAbrirArchivoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblErrorNombre">
+    <Component class="javax.swing.JLabel" name="lblNombreError">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>

@@ -2,7 +2,6 @@
 package interfaz;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -50,7 +49,6 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
         }
         
         tblAdopciones.setModel(modelo);
-        //btnAnular.setEnabled(false);
     }
 
     @Override
@@ -70,8 +68,8 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlAdiopciones = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        pnlAdopciones = new javax.swing.JPanel();
+        scrAdopciones = new javax.swing.JScrollPane();
         tblAdopciones = new javax.swing.JTable();
         btnAnular = new javax.swing.JButton();
 
@@ -79,7 +77,7 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
         setTitle("Anular adopción");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        pnlAdiopciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Adopciones realizadas"));
+        pnlAdopciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Adopciones realizadas"));
 
         tblAdopciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,22 +90,22 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblAdopciones);
+        scrAdopciones.setViewportView(tblAdopciones);
 
-        javax.swing.GroupLayout pnlAdiopcionesLayout = new javax.swing.GroupLayout(pnlAdiopciones);
-        pnlAdiopciones.setLayout(pnlAdiopcionesLayout);
-        pnlAdiopcionesLayout.setHorizontalGroup(
-            pnlAdiopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAdiopcionesLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlAdopcionesLayout = new javax.swing.GroupLayout(pnlAdopciones);
+        pnlAdopciones.setLayout(pnlAdopcionesLayout);
+        pnlAdopcionesLayout.setHorizontalGroup(
+            pnlAdopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAdopcionesLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnlAdiopcionesLayout.setVerticalGroup(
-            pnlAdiopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlAdiopcionesLayout.createSequentialGroup()
+        pnlAdopcionesLayout.setVerticalGroup(
+            pnlAdopcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlAdopcionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -131,14 +129,14 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlAdiopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(pnlAdiopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAnular, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
@@ -154,12 +152,12 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
         if (fila != -1){
             Adopcion adopcion = adopcionesEnTabla.get(fila);
             
-            int respuesta = JOptionPane.showConfirmDialog(this, "Desea anular la adopcion","Confirmar",JOptionPane.YES_NO_OPTION);
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Desea anular la adopción número " + adopcion.getNumero() + "?","Confirmar",JOptionPane.YES_NO_OPTION);
             
             if(respuesta == JOptionPane.YES_OPTION){
                 try{
                     sistema.anularAdopcion(adopcion);
-                    JOptionPane.showMessageDialog(this, "Adopcion numero " + adopcion.getNumero() + " anulada");
+                    JOptionPane.showMessageDialog(this, "Adopción número " + adopcion.getNumero() + " anulada");
                     cargarTabla();
                 } catch (IllegalArgumentException ex){
                     JOptionPane.showMessageDialog(this, ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
@@ -171,8 +169,8 @@ public class FrmAnularAdopcion extends javax.swing.JFrame implements ListSelecti
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnular;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel pnlAdiopciones;
+    private javax.swing.JScrollPane scrAdopciones;
+    private javax.swing.JPanel pnlAdopciones;
     private javax.swing.JTable tblAdopciones;
     // End of variables declaration//GEN-END:variables
 

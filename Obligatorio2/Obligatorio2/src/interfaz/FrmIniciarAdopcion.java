@@ -2,10 +2,9 @@
 
 package interfaz;
 
+import dominio.Adopcion;
 import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import dominio.EstadoMascota;
@@ -15,11 +14,8 @@ import java.util.Observable;
 import java.util.Observer;
 import modelo.Sistema;
 
-public class FrmIniciarAdopcion extends javax.swing.JFrame 
-        implements DocumentListener, ListSelectionListener, Observer{
-    
-    //private final Mascota mas;
-    //private final Familia fam;
+public class FrmIniciarAdopcion extends javax.swing.JFrame implements ListSelectionListener, Observer {
+
     private final Sistema sistema;
      
     public FrmIniciarAdopcion(Sistema sistema) {
@@ -29,15 +25,14 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
         getRootPane().setDefaultButton(btnAceptar);
         cargarListaMascotas();
         cargarListaFamilias();
-        
-        txtAComentarios.getDocument().addDocumentListener(this);
+
         lstFamilias.addListSelectionListener(this);
         lstMascotas.addListSelectionListener(this);
 
-        
         btnAceptar.setEnabled(false);
         txtPeso.setEditable(false);
         txtATemperamento.setEditable(false);
+        mostrarProximoNumero();
        
     }
 
@@ -45,21 +40,11 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
     public void update(Observable ob, Object o){
         cargarListaMascotas();
         cargarListaFamilias();
-    }
-    
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        actualizarBoton();
+        mostrarProximoNumero();
     }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        actualizarBoton();
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        actualizarBoton();
+    private void mostrarProximoNumero() {
+        setTitle("Realizar adopción - Nº " + sistema.getProximoNumeroAdopcion());
     }
     
     private void actualizarBoton(){
@@ -111,23 +96,23 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
 
         btnAceptar = new javax.swing.JButton();
         pnlMascotas = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrMascotas = new javax.swing.JScrollPane();
         lstMascotas = new javax.swing.JList<>();
         pnlDatos = new javax.swing.JPanel();
         lblPeso = new javax.swing.JLabel();
         txtPeso = new javax.swing.JTextField();
         lblTemperamento = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrTemperamento = new javax.swing.JScrollPane();
         txtATemperamento = new javax.swing.JTextArea();
         pnlFamilias = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        scrFamilias = new javax.swing.JScrollPane();
         lstFamilias = new javax.swing.JList<>();
         pnlComentarios = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        scrComentarios = new javax.swing.JScrollPane();
         txtAComentarios = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Iniciar Adopción");
+        setTitle("Realizar adopción");
         setResizable(false);
 
         btnAceptar.setBackground(new java.awt.Color(200, 240, 200));
@@ -142,7 +127,7 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
 
         pnlMascotas.setBorder(javax.swing.BorderFactory.createTitledBorder("Mascotas disponibles"));
 
-        jScrollPane1.setViewportView(lstMascotas);
+        scrMascotas.setViewportView(lstMascotas);
 
         javax.swing.GroupLayout pnlMascotasLayout = new javax.swing.GroupLayout(pnlMascotas);
         pnlMascotas.setLayout(pnlMascotasLayout);
@@ -150,18 +135,18 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
             pnlMascotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMascotasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlMascotasLayout.setVerticalGroup(
             pnlMascotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMascotasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(scrMascotas)
                 .addContainerGap())
         );
 
-        pnlDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos mascota"));
+        pnlDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de la mascota"));
 
         lblPeso.setText("Peso");
 
@@ -169,27 +154,24 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
 
         txtATemperamento.setColumns(20);
         txtATemperamento.setRows(5);
-        jScrollPane2.setViewportView(txtATemperamento);
+        scrTemperamento.setViewportView(txtATemperamento);
 
         javax.swing.GroupLayout pnlDatosLayout = new javax.swing.GroupLayout(pnlDatos);
         pnlDatos.setLayout(pnlDatosLayout);
         pnlDatosLayout.setHorizontalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDatosLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(lblPeso)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPeso))
+                    .addComponent(scrTemperamento, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(pnlDatosLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(lblTemperamento)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(pnlDatosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTemperamento)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlDatosLayout.setVerticalGroup(
             pnlDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,13 +183,13 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(lblTemperamento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrTemperamento, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pnlFamilias.setBorder(javax.swing.BorderFactory.createTitledBorder("Familias"));
 
-        jScrollPane3.setViewportView(lstFamilias);
+        scrFamilias.setViewportView(lstFamilias);
 
         javax.swing.GroupLayout pnlFamiliasLayout = new javax.swing.GroupLayout(pnlFamilias);
         pnlFamilias.setLayout(pnlFamiliasLayout);
@@ -215,22 +197,22 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
             pnlFamiliasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(scrFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlFamiliasLayout.setVerticalGroup(
             pnlFamiliasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFamiliasLayout.createSequentialGroup()
                 .addContainerGap(9, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrFamilias, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        pnlComentarios.setBorder(javax.swing.BorderFactory.createTitledBorder("Comentarios adopción"));
+        pnlComentarios.setBorder(javax.swing.BorderFactory.createTitledBorder("Comentarios"));
 
         txtAComentarios.setColumns(20);
         txtAComentarios.setRows(5);
-        jScrollPane4.setViewportView(txtAComentarios);
+        scrComentarios.setViewportView(txtAComentarios);
 
         javax.swing.GroupLayout pnlComentariosLayout = new javax.swing.GroupLayout(pnlComentarios);
         pnlComentarios.setLayout(pnlComentariosLayout);
@@ -238,13 +220,13 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
             pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlComentariosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrComentarios, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlComentariosLayout.setVerticalGroup(
             pnlComentariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlComentariosLayout.createSequentialGroup()
-                .addComponent(jScrollPane4)
+                .addComponent(scrComentarios)
                 .addContainerGap())
         );
 
@@ -261,7 +243,7 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(pnlFamilias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlComentarios, javax.swing.GroupLayout.PREFERRED_SIZE, 169, Short.MAX_VALUE))
+                        .addComponent(pnlComentarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43))
         );
@@ -294,11 +276,15 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
     
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         try{
-            if (txtAComentarios.getText().isEmpty()){
+            if (txtAComentarios.getText().trim().isEmpty()){
                 txtAComentarios.setText("Sin observaciones");
             }
-            sistema.realizarAdopcion(this.lstMascotas.getSelectedValue(), this.lstFamilias.getSelectedValue(), this.txtAComentarios.getText());
-            JOptionPane.showMessageDialog(this, "Adopción número " + sistema.getAdopciones().getLast().getNumero()+ " registrada");
+            Adopcion a = sistema.realizarAdopcion(this.lstMascotas.getSelectedValue(), 
+                    this.lstFamilias.getSelectedValue(), this.txtAComentarios.getText());
+            JOptionPane.showMessageDialog(this, 
+                    "Se registró la adopción número " + a.getNumero() + ".\n" + a.getMascota().getNombre()
+                    + " ahora pertenece a la familia " + a.getFamilia().getApellido() + ".",
+                    "¡Adopción registrada!",JOptionPane.INFORMATION_MESSAGE);
             cargarListaMascotas();
             lstFamilias.clearSelection();
             txtAComentarios.setText("");
@@ -314,10 +300,10 @@ public class FrmIniciarAdopcion extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane scrMascotas;
+    private javax.swing.JScrollPane scrTemperamento;
+    private javax.swing.JScrollPane scrFamilias;
+    private javax.swing.JScrollPane scrComentarios;
     private javax.swing.JLabel lblPeso;
     private javax.swing.JLabel lblTemperamento;
     private javax.swing.JList<Familia> lstFamilias;

@@ -3,7 +3,6 @@
 package modelo;
 
 import interfaz.FrmMenu;
-import dominio.*;
 import javax.swing.UIManager;
 
 public class Obligatorio2 {
@@ -13,7 +12,6 @@ public class Obligatorio2 {
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }catch(Exception e){
-            
         }
         FrmMenu menu = new FrmMenu(sistema);
         menu.setVisible(true);

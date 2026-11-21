@@ -1,4 +1,4 @@
-//Leonardo Santos - 390545
+// Leonardo Santos - 390545
 package interfaz;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
         this.sistema = sistema;
         sistema.addObserver(this);
         initComponents();
-        
+        tblDonaciones.setDefaultEditor(Object.class, null);
         cargarTabla();
     }
 
@@ -27,7 +27,7 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
     public void update(Observable ob, Object o){
         cargarTabla();
     }
-    
+         
     private void cargarTabla(){
         DefaultTableModel modelo = new DefaultTableModel();    
         modelo.addColumn("Número");
@@ -62,13 +62,14 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
     private void initComponents() {
 
         pnlDonaciones = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrDonaciones = new javax.swing.JScrollPane();
         tblDonaciones = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Consulta de donaciones");
 
         pnlDonaciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Donaciones realizadas"));
+        pnlDonaciones.setLayout(null);
 
         tblDonaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -81,24 +82,10 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblDonaciones);
+        scrDonaciones.setViewportView(tblDonaciones);
 
-        javax.swing.GroupLayout pnlDonacionesLayout = new javax.swing.GroupLayout(pnlDonaciones);
-        pnlDonaciones.setLayout(pnlDonacionesLayout);
-        pnlDonacionesLayout.setHorizontalGroup(
-            pnlDonacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDonacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlDonacionesLayout.setVerticalGroup(
-            pnlDonacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlDonacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        pnlDonaciones.add(scrDonaciones);
+        scrDonaciones.setBounds(11, 24, 368, 326);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,14 +93,14 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(pnlDonaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(pnlDonaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(pnlDonaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlDonaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
 
@@ -122,7 +109,7 @@ public class FrmConsultarDonaciones extends javax.swing.JFrame implements Observ
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane scrDonaciones;
     private javax.swing.JPanel pnlDonaciones;
     private javax.swing.JTable tblDonaciones;
     // End of variables declaration//GEN-END:variables

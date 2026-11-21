@@ -30,7 +30,7 @@
               <Component id="lblFoto" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Component id="pnlAutores" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="57" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +51,7 @@
     <Component class="javax.swing.JLabel" name="lblFoto">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagenes/Leonardo.jpg.png"/>
+          <Image iconType="3" name="/imagenes/Leonardo.png"/>
         </Property>
       </Properties>
     </Component>
@@ -59,7 +59,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Sobre mi"/>
+            <TitledBorder title="Sobre m&#xed;"/>
           </Border>
         </Property>
       </Properties>

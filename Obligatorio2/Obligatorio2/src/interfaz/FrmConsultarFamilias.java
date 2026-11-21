@@ -28,7 +28,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
     private void cargarTabla(){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Cédula");
-        modelo.addColumn("Teléfono");
+        modelo.addColumn("Celular");
         modelo.addColumn("Apellido");
         modelo.addColumn("Cantidad de adopciones");
         
@@ -55,7 +55,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
         lblOrden = new javax.swing.JLabel();
         rbtnApellido = new javax.swing.JRadioButton();
         rbtnAdopciones = new javax.swing.JRadioButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrFamilias = new javax.swing.JScrollPane();
         tblFamilias = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -83,7 +83,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblFamilias);
+        scrFamilias.setViewportView(tblFamilias);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,7 +98,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
                         .addComponent(rbtnApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(rbtnAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
+                    .addComponent(scrFamilias, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE))
                 .addGap(43, 43, 43))
         );
 
@@ -111,7 +111,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
                     .addComponent(rbtnApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtnAdopciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
+                .addComponent(scrFamilias, javax.swing.GroupLayout.DEFAULT_SIZE, 366, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
         );
 
@@ -130,7 +130,7 @@ public class FrmConsultarFamilias extends javax.swing.JFrame implements Observer
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grpOrden;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane scrFamilias;
     private javax.swing.JLabel lblOrden;
     private javax.swing.JRadioButton rbtnAdopciones;
     private javax.swing.JRadioButton rbtnApellido;

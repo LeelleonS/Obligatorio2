@@ -2,20 +2,17 @@
 
 package interfaz;
 
-import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
 import dominio.Empresa;
 import modelo.Sistema;
 
 public class FrmAltaEmpresa extends javax.swing.JFrame implements DocumentListener {
     
-    private String nombreValido = "[A-Za-z0-9]+";
-    private String rutValido = "[0-9]+";
-    private String direccionValido = "[A-Za-z0-9]+";
+    private static final String NOMBRE_VALIDO = "[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜü .,&'-]+";
+    private static final String RUT_VALIDO = "[0-9]+";
+    private static final String DIRECCION_VALIDA = "[A-Za-z0-9ÁÉÍÓÚáéíóúÑñÜü .,°º#/-]+";
     
     private final Sistema sistema;
 
@@ -45,34 +42,14 @@ public class FrmAltaEmpresa extends javax.swing.JFrame implements DocumentListen
     }
    
     private void actualizarBoton(){
-       boolean nombreOk = esValido(txtNombre, nombreValido);
-       boolean rutOk = esValido(txtRUT, rutValido);
-       boolean direccionOk = esValido(txtDireccion, direccionValido);
-       btnAceptar.setEnabled(nombreOk && rutOk && direccionOk);   
+        boolean nombreOk = Validaciones.esValido(txtNombre, NOMBRE_VALIDO);
+        boolean rutOk = Validaciones.esValido(txtRUT, RUT_VALIDO);
+        boolean direccionOk = Validaciones.esValido(txtDireccion, DIRECCION_VALIDA);
+        btnAceptar.setEnabled(nombreOk && rutOk && direccionOk);
 
-        avisarSiEstaMal(txtNombre, nombreValido, lblNombreError, "Nombre incorrecto");
-        avisarSiEstaMal(txtRUT, rutValido, lblRUTError, "El RUT solo puede tener números");
-        avisarSiEstaMal(txtDireccion, direccionValido, lblDireccionError, "Dirección incorrecta");
-    }
-   
-    private boolean esValido(JTextComponent campo, String regex){
-        boolean ok = campo.getText().trim().matches(regex);
-        if (ok) {
-           campo.setForeground(Color.BLACK);
-        }
-        return ok;
-    }
-
-    private void avisarSiEstaMal(JTextComponent campo, String regex, JLabel etiqueta, String mensaje) {
-        String texto = campo.getText().trim();
-        if (!texto.isEmpty() && !texto.matches(regex)) {
-            campo.setForeground(Color.RED);
-            etiqueta.setText(mensaje);
-            etiqueta.setForeground(Color.RED);
-        } else {
-            campo.setForeground(Color.BLACK);
-            etiqueta.setText("");
-        }
+        Validaciones.avisarSiEstaMal(txtNombre, nombreOk, lblNombreError, "El nombre solo puede tener letras, números, espacios y . , & ' -");
+        Validaciones.avisarSiEstaMal(txtRUT, rutOk, lblRUTError, "El RUT solo puede tener números");
+        Validaciones.avisarSiEstaMal(txtDireccion, direccionOk, lblDireccionError, "La dirección solo puede tener letras, números, espacios y . , ° # / -");
     }
 
     @SuppressWarnings("unchecked")
@@ -92,7 +69,7 @@ public class FrmAltaEmpresa extends javax.swing.JFrame implements DocumentListen
         lblDireccionError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Alta de Empresa");
+        setTitle("Alta de empresa");
         setResizable(false);
 
         lblNombre.setText("Nombre");
@@ -191,8 +168,8 @@ public class FrmAltaEmpresa extends javax.swing.JFrame implements DocumentListen
         try {
             Empresa empresa = new Empresa(txtNombre.getText(), txtRUT.getText(), txtDireccion.getText());
             sistema.agregarEmpresa(empresa);
-            JOptionPane.showMessageDialog(this, empresa.getNombre() + " registrada con éxito!",
-                    "Empresa registrada!",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "¡" + empresa.getNombre() + " registrada con éxito!",
+                    "¡Empresa registrada!", JOptionPane.INFORMATION_MESSAGE);
             limpiar();
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

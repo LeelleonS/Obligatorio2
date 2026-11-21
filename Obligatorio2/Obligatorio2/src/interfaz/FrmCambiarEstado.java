@@ -20,7 +20,7 @@ import modelo.Sistema;
 
 public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectionListener, Observer, TableCellRenderer {
 
-    private final modelo.Sistema sistema;
+    private final Sistema sistema;
     private ArrayList<Mascota> mascotasEnTabla;
     private final JLabel celda = new JLabel();
 
@@ -51,14 +51,14 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
             btnCambiar.setEnabled(tblMascotas.getSelectedRow() != -1);
             if (tblMascotas.getSelectedRow() != -1) {
                 if (mascotasEnTabla.get(tblMascotas.getSelectedRow()).getEstado() == EstadoMascota.DISPONIBLE) {
-                    btnCambiar.setText("Cambiar a No Disponible");
+                    btnCambiar.setText("Cambiar a no disponible");
                     btnCambiar.setBackground(new Color(255, 75, 55));
                 } else {
-                    btnCambiar.setText("Cambiar a Disponible");
+                    btnCambiar.setText("Cambiar a disponible");
                     btnCambiar.setBackground(new Color(200, 240, 200));
                 }
             } else {
-                btnCambiar.setText("Cambiar Estado");
+                btnCambiar.setText("Cambiar estado");
             }
         }
     }
@@ -86,6 +86,7 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
     private void actualizarEstadosMascotas() {
         mascotasEnTabla = new ArrayList<>();
         DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Código");
         modelo.addColumn("Nombre");
         modelo.addColumn("Estado");
 
@@ -96,7 +97,7 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
         }
 
         for (Mascota m : mascotasEnTabla) {
-            Object[] fila = {m.getNombre(), m.getEstado()};
+            Object[] fila = {m.getCodigo(), m.getNombre(), m.getEstado()};
             modelo.addRow(fila);
         }
         tblMascotas.setModel(modelo);
@@ -113,7 +114,7 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
     private void initComponents() {
 
         pnlMascotas = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrMascotas = new javax.swing.JScrollPane();
         tblMascotas = new javax.swing.JTable();
         btnCambiar = new javax.swing.JButton();
 
@@ -133,7 +134,7 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblMascotas);
+        scrMascotas.setViewportView(tblMascotas);
 
         javax.swing.GroupLayout pnlMascotasLayout = new javax.swing.GroupLayout(pnlMascotas);
         pnlMascotas.setLayout(pnlMascotasLayout);
@@ -141,19 +142,19 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
             pnlMascotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMascotasLayout.createSequentialGroup()
                 .addContainerGap(10, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         pnlMascotasLayout.setVerticalGroup(
             pnlMascotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMascotasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addComponent(scrMascotas, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         btnCambiar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        btnCambiar.setText("Cambiar Estado");
+        btnCambiar.setText("Cambiar estado");
         btnCambiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnCambiar.setContentAreaFilled(false);
         btnCambiar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -204,7 +205,7 @@ public class FrmCambiarEstado extends javax.swing.JFrame implements ListSelectio
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCambiar;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane scrMascotas;
     private javax.swing.JPanel pnlMascotas;
     private javax.swing.JTable tblMascotas;
     // End of variables declaration//GEN-END:variables

@@ -1,5 +1,4 @@
 // Leonardo Santos - 390545
-
 package interfaz;
 
 import java.awt.Color;
@@ -18,30 +17,29 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import modelo.Sistema;
 
-public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Observer{
-    
+public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Observer {
+
     private final Sistema sistema;
-    private JLabel celda = new JLabel();
-    
+    private final JLabel celda = new JLabel();
+
     public FrmMenu(Sistema sistema) {
         this.sistema = sistema;
         sistema.addObserver(this);
         initComponents();
-        
+
         celda.setOpaque(true);
-        tblMascotas.setDefaultRenderer(Object.class,this);
+        tblMascotas.setDefaultRenderer(Object.class, this);
         tblMascotas.setDefaultEditor(Object.class, null);
-        
+
         actualizarInicio();
     }
 
     @Override
-    public void update(Observable ob, Object o){
+    public void update(Observable ob, Object o) {
         actualizarInicio();
     }
-    
-   
-    private void actualizarInicio(){
+
+    private void actualizarInicio() {
         lblMascota.setText("Total de mascotas: " + sistema.getMascotas().size());
         lblDisponibles.setText("Disponibles para adoptar: " + sistema.getMascotasPorEstado(EstadoMascota.DISPONIBLE).size());
         lblNoDisponibles.setText("No disponibles para adoptar: " + sistema.getMascotasPorEstado(EstadoMascota.NO_DISPONIBLE).size());
@@ -51,45 +49,45 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         actualizarAlimento();
         actualizarEstadosMascotas();
     }
-    
-    private void actualizarAlimento(){
+
+    private void actualizarAlimento() {
         DefaultListModel<String> modelo = new DefaultListModel<>();
-        for (TipoAlimento t : TipoAlimento.values()){
-            modelo.addElement(t.getDescripcion() + ": " + sistema.getStockPorTipo(t) + " Kg");
+        for (TipoAlimento t : TipoAlimento.values()) {
+            modelo.addElement(t.getDescripcion() + ": " + sistema.getStockPorTipo(t) + " kg");
         }
         lstAlimento.setModel(modelo);
     }
-    
-    private void actualizarEstadosMascotas(){
+
+    private void actualizarEstadosMascotas() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Nombre");
         modelo.addColumn("Estado");
-                
-        for(Mascota m : sistema.getMascotas()){
-            Object[] fila = { m.getNombre(), m.getEstado()};
+
+        for (Mascota m : sistema.getMascotas()) {
+            Object[] fila = {m.getNombre(), m.getEstado()};
             modelo.addRow(fila);
         }
         tblMascotas.setModel(modelo);
     }
-    
+
     @Override
-    public Component getTableCellRendererComponent(JTable tabla, Object valor, boolean seleccionada, boolean tieneFoco, int fila, int columna){
+    public Component getTableCellRendererComponent(JTable tabla, Object valor, boolean seleccionada, boolean tieneFoco, int fila, int columna) {
         celda.setBackground(tabla.getBackground());
-        
-        if (columna == 1){
+
+        if (columna == 1) {
             EstadoMascota estado = (EstadoMascota) valor;
             celda.setText("\u25CF");
             celda.setHorizontalAlignment(JLabel.CENTER);
             celda.setFont(tabla.getFont().deriveFont(18f));
-            
-            if (estado == EstadoMascota.DISPONIBLE){
-                celda.setForeground(new Color(0,160,0));
-            } else if (estado == EstadoMascota.NO_DISPONIBLE){
+
+            if (estado == EstadoMascota.DISPONIBLE) {
+                celda.setForeground(new Color(0, 160, 0));
+            } else if (estado == EstadoMascota.NO_DISPONIBLE) {
                 celda.setForeground(Color.RED);
             } else {
                 celda.setForeground(Color.BLUE);
             }
-        }else{
+        } else {
             celda.setText(valor.toString());
             celda.setHorizontalAlignment(JLabel.LEFT);
             celda.setFont(tabla.getFont());
@@ -97,7 +95,7 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         }
         return celda;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,32 +109,33 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         lblAdopciones = new javax.swing.JLabel();
         lblEmpresas = new javax.swing.JLabel();
         pnlStock = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        scrAlimento = new javax.swing.JScrollPane();
         lstAlimento = new javax.swing.JList<>();
         pnlMascotas = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrMascotas = new javax.swing.JScrollPane();
         tblMascotas = new javax.swing.JTable();
         lblLeyenda = new javax.swing.JLabel();
-        menuBar = new javax.swing.JMenuBar();
-        menMascotas = new javax.swing.JMenu();
+        barMenu = new javax.swing.JMenuBar();
+        menAltas = new javax.swing.JMenu();
         itmMascotas = new javax.swing.JMenuItem();
         itmFamilias = new javax.swing.JMenuItem();
         itmEmpresas = new javax.swing.JMenuItem();
         menMovimientos = new javax.swing.JMenu();
-        itmIniciarAdopcion = new javax.swing.JMenuItem();
+        itmRealizarAdopcion = new javax.swing.JMenuItem();
         itmAnularAdopcion = new javax.swing.JMenuItem();
         itmCambiarEstadoMascota = new javax.swing.JMenuItem();
         itmRegistrarDonacion = new javax.swing.JMenuItem();
         itmImportarDonaciones = new javax.swing.JMenuItem();
-        menReportes = new javax.swing.JMenu();
+        menVarios = new javax.swing.JMenu();
         itmConsultarFamilias = new javax.swing.JMenuItem();
         itmConsultarDonaciones = new javax.swing.JMenuItem();
         itmHTML = new javax.swing.JMenuItem();
         itmRecuperarDatos = new javax.swing.JMenuItem();
-        itmAcercaDe = new javax.swing.JMenuItem();
+        itmAutores = new javax.swing.JMenuItem();
+        itmSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Gestión de un Refugio de Perros");
+        setTitle("Gestión de un refugio de perros");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -158,7 +157,7 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         pnlResumen.add(lblDisponibles);
         lblDisponibles.setBounds(15, 55, 300, 20);
 
-        lblNoDisponibles.setText("No Disponibles:");
+        lblNoDisponibles.setText("No disponibles:");
         pnlResumen.add(lblNoDisponibles);
         lblNoDisponibles.setBounds(15, 85, 300, 20);
 
@@ -185,10 +184,10 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(lstAlimento);
+        scrAlimento.setViewportView(lstAlimento);
 
-        pnlStock.add(jScrollPane2);
-        jScrollPane2.setBounds(15, 25, 280, 170);
+        pnlStock.add(scrAlimento);
+        scrAlimento.setBounds(15, 25, 280, 170);
 
         pnlInicio.add(pnlStock);
         pnlStock.setBounds(383, 18, 310, 215);
@@ -207,10 +206,10 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblMascotas);
+        scrMascotas.setViewportView(tblMascotas);
 
-        pnlMascotas.add(jScrollPane1);
-        jScrollPane1.setBounds(15, 25, 620, 235);
+        pnlMascotas.add(scrMascotas);
+        scrMascotas.setBounds(15, 25, 620, 235);
 
         lblLeyenda.setText("<html><font color='#00a000'>●</font> Disponible &nbsp;&nbsp; <font color='red'>●</font> No disponible &nbsp;&nbsp; <font color='blue'>●</font> Adoptado</html>");
         pnlMascotas.add(lblLeyenda);
@@ -222,83 +221,92 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         getContentPane().add(pnlInicio);
         pnlInicio.setBounds(0, 0, 736, 561);
 
-        menMascotas.setMnemonic('f');
-        menMascotas.setText("Altas");
+        menAltas.setMnemonic('a');
+        menAltas.setText("Altas");
 
-        itmMascotas.setMnemonic('o');
+        itmMascotas.setMnemonic('m');
         itmMascotas.setText("Mascotas");
         itmMascotas.addActionListener(this::itmMascotasActionPerformed);
-        menMascotas.add(itmMascotas);
+        menAltas.add(itmMascotas);
 
-        itmFamilias.setMnemonic('s');
+        itmFamilias.setMnemonic('f');
         itmFamilias.setText("Familias");
         itmFamilias.addActionListener(this::itmFamiliasActionPerformed);
-        menMascotas.add(itmFamilias);
+        menAltas.add(itmFamilias);
 
-        itmEmpresas.setMnemonic('a');
+        itmEmpresas.setMnemonic('e');
         itmEmpresas.setText("Empresas");
         itmEmpresas.addActionListener(this::itmEmpresasActionPerformed);
-        menMascotas.add(itmEmpresas);
+        menAltas.add(itmEmpresas);
 
-        menuBar.add(menMascotas);
+        barMenu.add(menAltas);
 
-        menMovimientos.setMnemonic('e');
+        menMovimientos.setMnemonic('m');
         menMovimientos.setText("Movimientos");
 
-        itmIniciarAdopcion.setMnemonic('t');
-        itmIniciarAdopcion.setText("Iniciar Adopción");
-        itmIniciarAdopcion.addActionListener(this::itmIniciarAdopcionActionPerformed);
-        menMovimientos.add(itmIniciarAdopcion);
+        itmRealizarAdopcion.setMnemonic('r');
+        itmRealizarAdopcion.setText("Realizar adopción");
+        itmRealizarAdopcion.addActionListener(this::itmRealizarAdopcionActionPerformed);
+        menMovimientos.add(itmRealizarAdopcion);
 
-        itmAnularAdopcion.setMnemonic('y');
-        itmAnularAdopcion.setText("Anular Adopción");
+        itmAnularAdopcion.setMnemonic('a');
+        itmAnularAdopcion.setText("Anular adopción");
         itmAnularAdopcion.addActionListener(this::itmAnularAdopcionActionPerformed);
         menMovimientos.add(itmAnularAdopcion);
 
-        itmCambiarEstadoMascota.setMnemonic('p');
-        itmCambiarEstadoMascota.setText("Cambiar Estado Mascota");
+        itmCambiarEstadoMascota.setMnemonic('c');
+        itmCambiarEstadoMascota.setText("Cambiar estado de mascota");
         itmCambiarEstadoMascota.addActionListener(this::itmCambiarEstadoMascotaActionPerformed);
         menMovimientos.add(itmCambiarEstadoMascota);
 
         itmRegistrarDonacion.setMnemonic('d');
-        itmRegistrarDonacion.setText("Registrar Donación");
+        itmRegistrarDonacion.setText("Registrar donación");
         itmRegistrarDonacion.addActionListener(this::itmRegistrarDonacionActionPerformed);
         menMovimientos.add(itmRegistrarDonacion);
 
-        itmImportarDonaciones.setText("Importar Donaciones");
+        itmImportarDonaciones.setMnemonic('i');
+        itmImportarDonaciones.setText("Importar donaciones");
         itmImportarDonaciones.addActionListener(this::itmImportarDonacionesActionPerformed);
         menMovimientos.add(itmImportarDonaciones);
 
-        menuBar.add(menMovimientos);
+        barMenu.add(menMovimientos);
 
-        menReportes.setMnemonic('h');
-        menReportes.setText("Reportes");
+        menVarios.setMnemonic('v');
+        menVarios.setText("Varios");
 
-        itmConsultarFamilias.setMnemonic('c');
-        itmConsultarFamilias.setText("Consultar Familias");
+        itmConsultarFamilias.setMnemonic('f');
+        itmConsultarFamilias.setText("Consultar familias");
         itmConsultarFamilias.addActionListener(this::itmConsultarFamiliasActionPerformed);
-        menReportes.add(itmConsultarFamilias);
+        menVarios.add(itmConsultarFamilias);
 
-        itmConsultarDonaciones.setMnemonic('a');
-        itmConsultarDonaciones.setText("Consultar Donaciones");
+        itmConsultarDonaciones.setMnemonic('d');
+        itmConsultarDonaciones.setText("Consultar donaciones");
         itmConsultarDonaciones.addActionListener(this::itmConsultarDonacionesActionPerformed);
-        menReportes.add(itmConsultarDonaciones);
+        menVarios.add(itmConsultarDonaciones);
 
-        itmHTML.setText("Generación de Página HTML");
+        itmHTML.setMnemonic('g');
+        itmHTML.setText("Generar página HTML");
         itmHTML.addActionListener(this::itmHTMLActionPerformed);
-        menReportes.add(itmHTML);
+        menVarios.add(itmHTML);
 
-        itmRecuperarDatos.setText("Recuperar Datos");
+        itmRecuperarDatos.setMnemonic('r');
+        itmRecuperarDatos.setText("Recuperar datos");
         itmRecuperarDatos.addActionListener(this::itmRecuperarDatosActionPerformed);
-        menReportes.add(itmRecuperarDatos);
+        menVarios.add(itmRecuperarDatos);
 
-        itmAcercaDe.setText("Acerca de...");
-        itmAcercaDe.addActionListener(this::itmAcercaDeActionPerformed);
-        menReportes.add(itmAcercaDe);
+        itmAutores.setMnemonic('a');
+        itmAutores.setText("Autores");
+        itmAutores.addActionListener(this::itmAutoresActionPerformed);
+        menVarios.add(itmAutores);
 
-        menuBar.add(menReportes);
+        itmSalir.setMnemonic('s');
+        itmSalir.setText("Salir");
+        itmSalir.addActionListener(this::itmSalirActionPerformed);
+        menVarios.add(itmSalir);
 
-        setJMenuBar(menuBar);
+        barMenu.add(menVarios);
+
+        setJMenuBar(barMenu);
 
         setSize(new java.awt.Dimension(752, 625));
         setLocationRelativeTo(null);
@@ -313,20 +321,22 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
     }//GEN-LAST:event_itmAnularAdopcionActionPerformed
 
     private void itmRecuperarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmRecuperarDatosActionPerformed
-        int respuesta = JOptionPane.showConfirmDialog(this, 
-            "Se reemplazarán todos los datos actuales por los guardados. ¿Continuar?",
-            "Confirmar",JOptionPane.YES_NO_OPTION);
-        if(respuesta == JOptionPane.YES_OPTION){
-            try{
-                sistema.recuperar();
-            }catch(ClassNotFoundException ex){
-                JOptionPane.showMessageDialog(this,ex.getMessage(),"No se pudieron cargar los datos"
-                        ,JOptionPane.ERROR_MESSAGE);
-            }catch(IOException ex){
-                JOptionPane.showMessageDialog(this,ex.getMessage(),"No se pudieron cargar los datos"
-                        ,JOptionPane.ERROR_MESSAGE);
+        int respuesta = JOptionPane.showConfirmDialog(this,
+                "Se reemplazarán todos los datos actuales por los guardados. ¿Continuar?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            if (!sistema.existenDatosGuardados()) {
+                JOptionPane.showMessageDialog(this, "Todavía no hay datos guardados de una ejecución anterior.",
+                        "Sin datos guardados", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                try {
+                    sistema.recuperar();
+                } catch (ClassNotFoundException | IOException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "No se pudieron cargar los datos",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } 
+        }
     }//GEN-LAST:event_itmRecuperarDatosActionPerformed
 
     private void itmFamiliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmFamiliasActionPerformed
@@ -337,9 +347,9 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         new FrmAltaEmpresa(sistema).setVisible(true);
     }//GEN-LAST:event_itmEmpresasActionPerformed
 
-    private void itmIniciarAdopcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmIniciarAdopcionActionPerformed
+    private void itmRealizarAdopcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmRealizarAdopcionActionPerformed
         new FrmIniciarAdopcion(sistema).setVisible(true);
-    }//GEN-LAST:event_itmIniciarAdopcionActionPerformed
+    }//GEN-LAST:event_itmRealizarAdopcionActionPerformed
 
     private void itmCambiarEstadoMascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCambiarEstadoMascotaActionPerformed
         new FrmCambiarEstado(sistema).setVisible(true);
@@ -351,16 +361,20 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
 
     private void itmImportarDonacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmImportarDonacionesActionPerformed
         JFileChooser archivoSeleccionado = new JFileChooser();
-        archivoSeleccionado.setFileFilter(new FileNameExtensionFilter("(*.txt)","txt"));
-        
-        if (archivoSeleccionado.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-            String rutaArchivo = archivoSeleccionado.getSelectedFile().getAbsolutePath();
-            if(sistema.leerArchivoDonaciones(rutaArchivo)){
-                JOptionPane.showMessageDialog(this,
-                "La importación finalizó con errores. Ver detalle en el archivo de errores.",
-                "Importación con errores", JOptionPane.WARNING_MESSAGE);
-            }else{
-                JOptionPane.showMessageDialog(this, "Importación finalizada sin errores");
+        archivoSeleccionado.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+
+        if (archivoSeleccionado.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            if (archivoSeleccionado.getSelectedFile().exists()) {
+                String rutaArchivo = archivoSeleccionado.getSelectedFile().getAbsolutePath();
+                if (sistema.leerArchivoDonaciones(rutaArchivo)) {
+                    JOptionPane.showMessageDialog(this,
+                            "La importación finalizó con errores.\nVer el detalle en " + sistema.rutaArchivoErrores(rutaArchivo),
+                            "Importación con errores", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Importación finalizada sin errores");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El archivo no existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_itmImportarDonacionesActionPerformed
@@ -377,23 +391,31 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
         new FrmGenerarHTML(sistema).setVisible(true);
     }//GEN-LAST:event_itmHTMLActionPerformed
 
-    private void itmAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaDeActionPerformed
+    private void itmAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAutoresActionPerformed
         new FrmAutores().setVisible(true);
-    }//GEN-LAST:event_itmAcercaDeActionPerformed
+    }//GEN-LAST:event_itmAutoresActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        try{
-            sistema.guardar();
-        }catch (IOException ex){
-            JOptionPane.showMessageDialog(this, "No se pudieron guardar los datos: " + ex.getMessage(),
-                "Error", JOptionPane.ERROR_MESSAGE);
-        }
-         System.exit(0);  
+        salir();
     }//GEN-LAST:event_formWindowClosing
+
+    private void itmSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmSalirActionPerformed
+        salir();
+    }//GEN-LAST:event_itmSalirActionPerformed
+
+    private void salir() {
+        try {
+            sistema.guardar();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "No se pudieron guardar los datos: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        System.exit(0);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem itmAcercaDe;
+    private javax.swing.JMenuItem itmAutores;
     private javax.swing.JMenuItem itmAnularAdopcion;
     private javax.swing.JMenuItem itmCambiarEstadoMascota;
     private javax.swing.JMenuItem itmConsultarDonaciones;
@@ -402,12 +424,13 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
     private javax.swing.JMenuItem itmFamilias;
     private javax.swing.JMenuItem itmHTML;
     private javax.swing.JMenuItem itmImportarDonaciones;
-    private javax.swing.JMenuItem itmIniciarAdopcion;
+    private javax.swing.JMenuItem itmRealizarAdopcion;
     private javax.swing.JMenuItem itmMascotas;
     private javax.swing.JMenuItem itmRecuperarDatos;
     private javax.swing.JMenuItem itmRegistrarDonacion;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem itmSalir;
+    private javax.swing.JScrollPane scrMascotas;
+    private javax.swing.JScrollPane scrAlimento;
     private javax.swing.JLabel lblAdopciones;
     private javax.swing.JLabel lblDisponibles;
     private javax.swing.JLabel lblEmpresas;
@@ -416,10 +439,10 @@ public class FrmMenu extends javax.swing.JFrame implements TableCellRenderer, Ob
     private javax.swing.JLabel lblMascota;
     private javax.swing.JLabel lblNoDisponibles;
     private javax.swing.JList<String> lstAlimento;
-    private javax.swing.JMenu menMascotas;
+    private javax.swing.JMenu menAltas;
     private javax.swing.JMenu menMovimientos;
-    private javax.swing.JMenu menReportes;
-    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menVarios;
+    private javax.swing.JMenuBar barMenu;
     private javax.swing.JPanel pnlInicio;
     private javax.swing.JPanel pnlMascotas;
     private javax.swing.JPanel pnlResumen;

@@ -4,6 +4,7 @@ package modelo;
 import dominio.*;
 import lecturaEscrituraArchivos.*;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.io.FileInputStream;
@@ -36,8 +37,6 @@ public class Sistema extends Observable implements Serializable{
         proxNumDonacion = 1;
     }
 
-    // ---------- Altas ----------
-
     public void agregarMascota(Mascota m) {
         if (buscarMascota(m.getCodigo()) != null) {
             throw new IllegalArgumentException("Ya existe una mascota con código " + m.getCodigo());
@@ -66,6 +65,12 @@ public class Sistema extends Observable implements Serializable{
     }
     
     public Donacion agregarDonacion(Empresa empresa, TipoAlimento tipoAlimento, double kilos){
+        if (empresa == null || tipoAlimento == null) {
+            throw new IllegalArgumentException("Debe elegir una empresa y un tipo de alimento");
+        }
+        if (kilos <= 0) {
+            throw new IllegalArgumentException("La cantidad de kilos debe ser mayor a 0");
+        }
         Donacion donacion = new Donacion(proxNumDonacion, empresa, tipoAlimento, kilos);
         proxNumDonacion++;
         donaciones.add(donacion);
@@ -101,7 +106,9 @@ public class Sistema extends Observable implements Serializable{
         return null;
     }
 
-    // ---------- Movimientos ----------
+    public int getProximoNumeroAdopcion() {
+        return proxNumAdopcion;
+    }
 
     public Adopcion realizarAdopcion(Mascota mascota, Familia familia, String comentarios) {
         if (mascota == null || familia == null) {
@@ -119,7 +126,6 @@ public class Sistema extends Observable implements Serializable{
         return adopcion;
     }
 
-    // El número de la adopción anulada no se reutiliza
     public void anularAdopcion(Adopcion adopcion) {
         if (!adopciones.remove(adopcion)) {
             throw new IllegalArgumentException("La adopción no está registrada");
@@ -137,6 +143,10 @@ public class Sistema extends Observable implements Serializable{
         }
         setChanged();
         notifyObservers();
+    }
+
+    public boolean existenDatosGuardados(){
+        return new File(PERSISTENCIA).exists();
     }
 
     public void guardar() throws IOException{
@@ -160,7 +170,6 @@ public class Sistema extends Observable implements Serializable{
         notifyObservers();
     }
     
-    // Registra las líneas válidas; si alguna tiene errores genera <nombre>Error.txt junto al archivo leído
     public boolean leerArchivoDonaciones(String ruta){
         ArchivoLectura arch = new ArchivoLectura(ruta);
         ArrayList<String> lineasConError = new ArrayList<>();
@@ -175,7 +184,7 @@ public class Sistema extends Observable implements Serializable{
                         TipoAlimento.desdeCodigo(Integer.parseInt(datos[1].trim())),
                         Double.parseDouble(datos[2].trim().replace(',', '.')));
             }else{
-                lineasConError.add("Linea: " + linea + " => " + error);
+                lineasConError.add("Línea " + linea + ": " + error);
             }
         }
         arch.cerrar();
@@ -188,40 +197,42 @@ public class Sistema extends Observable implements Serializable{
     
     private String buscarErrores(String[] datos){
         if(datos.length != 3){
-            return "Formato incorrecto";
+            return "formato incorrecto (se espera rut#tipo#kilos)";
         }
         String errores = "";
         if (buscarEmpresa(datos[0].trim()) == null){
-            errores += "Empresa no registrada\t";
+            errores += ", empresa no registrada";
         }
         if(!datos[1].trim().matches("[1-4]")){
-            errores += "Tipo de alimento no existente\t";
+            errores += ", tipo de alimento inexistente";
         }
         String kilos = datos[2].trim();
         if(!kilos.matches("[0-9]+([.,][0-9]+)?") || Double.parseDouble(kilos.replace(',', '.')) <= 0){
-            errores += "Peso incorrecto";
+            errores += ", cantidad de kilos incorrecta";
         }
-        return errores.trim();
+        if (errores.isEmpty()) {
+            return errores;
+        }
+        return errores.substring(2);
     }
     
-    // Sobrescribe el archivo de errores para que no se mezcle con importaciones anteriores
     private void logearErrores(String ruta, ArrayList<String> lineasConError){
-        int punto = ruta.lastIndexOf('.');
-        int separador = Math.max(ruta.lastIndexOf('\\'), ruta.lastIndexOf('/'));
-        String rutaError;
-        if(punto > separador){
-            rutaError = ruta.substring(0, punto) + "Error" + ruta.substring(punto);
-        }else{
-            rutaError = ruta + "Error.txt";
-        }
-        ArchivoGrabacion err = new ArchivoGrabacion(rutaError);
+        ArchivoGrabacion err = new ArchivoGrabacion(rutaArchivoErrores(ruta));
         for(String l : lineasConError){
             err.grabarLinea(l);
         }
         err.cerrar();
     }
 
-    // ---------- Consultas ----------
+    public String rutaArchivoErrores(String ruta){
+        int punto = ruta.lastIndexOf('.');
+        int separador = Math.max(ruta.lastIndexOf('\\'), ruta.lastIndexOf('/'));
+        if(punto > separador){
+            return ruta.substring(0, punto) + "Error" + ruta.substring(punto);
+        }
+        return ruta + "Error.txt";
+    }
+
 
     public ArrayList<Mascota> getMascotasPorEstado(EstadoMascota estado) {
         ArrayList<Mascota> resultado = new ArrayList<>();
@@ -259,7 +270,6 @@ public class Sistema extends Observable implements Serializable{
         return cantidadAdopciones;
     }
 
-    // Copia de las familias ordenada por apellido (A-Z) o por cantidad de adopciones (mayor a menor)
     public ArrayList<Familia> getFamiliasOrdenadas(boolean porApellido){
         ArrayList<Familia> ordenadas = getFamilias();
         for (int i = 0; i < ordenadas.size() - 1; i++){
@@ -276,7 +286,6 @@ public class Sistema extends Observable implements Serializable{
         return ordenadas;
     }
 
-    // Con igual cantidad de adopciones se desempata por apellido
     private boolean vaAntes(Familia a, Familia b, boolean porApellido){
         int comparacionApellido = a.getApellido().compareToIgnoreCase(b.getApellido());
         if (porApellido){
@@ -290,7 +299,6 @@ public class Sistema extends Observable implements Serializable{
         return comparacionApellido < 0;
     }
 
-    // Se agregan con número creciente, por lo que ya quedan ordenadas por número
     public ArrayList<Mascota> getMascotas(){
         ArrayList<Mascota> mascota = new ArrayList<>();
         for(Mascota m : mascotas){
@@ -325,13 +333,19 @@ public class Sistema extends Observable implements Serializable{
         return total;
     }
      
-    public void generarPaginaAdopciones(String ruta, String nombre) {
-        String nombreFinal;
-        if(ruta.isEmpty()){
-            nombreFinal = nombre+".html";
-        }else{
-            nombreFinal = ruta+"\\"+nombre+".html";
+    public String rutaPagina(String carpeta, String nombre) {
+        String archivo = nombre.trim();
+        if (!archivo.toLowerCase().endsWith(".html")) {
+            archivo += ".html";
         }
+        if (carpeta.isEmpty()) {
+            return archivo;
+        }
+        return new File(carpeta, archivo).getPath();
+    }
+
+    public String generarPaginaAdopciones(String ruta, String nombre) {
+        String nombreFinal = rutaPagina(ruta, nombre);
         
         ArchivoGrabacion arch = new ArchivoGrabacion(nombreFinal);
         
@@ -356,6 +370,7 @@ public class Sistema extends Observable implements Serializable{
         }
         arch.grabarLinea("</body></html>");
         arch.cerrar();
+        return nombreFinal;
     }
     
 }

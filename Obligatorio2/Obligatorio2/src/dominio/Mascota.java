@@ -4,7 +4,7 @@ package dominio;
 
 import java.io.Serializable;
 
-public class Mascota implements Serializable{
+public class Mascota implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -16,6 +16,15 @@ public class Mascota implements Serializable{
 
     
     public Mascota(String codigo, String nombre, String temperamento, double peso, EstadoMascota estado) {
+        if (codigo == null || codigo.isBlank()) {
+            throw new IllegalArgumentException("El código es obligatorio");
+        }
+        if (nombre == null || nombre.isBlank()) {
+            throw new IllegalArgumentException("El nombre es obligatorio");
+        }
+        if (peso <= 0) {
+            throw new IllegalArgumentException("El peso debe ser mayor a 0");
+        }
         this.codigo = codigo.trim();
         this.nombre = nombre.trim();
         this.temperamento = temperamento == null ? "" : temperamento.trim();

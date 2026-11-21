@@ -24,9 +24,9 @@ public class FrmAutores extends javax.swing.JFrame {
         setTitle("Autores");
         setResizable(false);
 
-        lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Leonardo.jpg.png"))); // NOI18N
+        lblFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Leonardo.png"))); // NOI18N
 
-        pnlAutores.setBorder(javax.swing.BorderFactory.createTitledBorder("Sobre mi"));
+        pnlAutores.setBorder(javax.swing.BorderFactory.createTitledBorder("Sobre mí"));
 
         lblMateria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblMateria.setText("Programación II - Obligatorio 2");
@@ -86,7 +86,7 @@ public class FrmAutores extends javax.swing.JFrame {
                 .addComponent(lblFoto)
                 .addGap(49, 49, 49)
                 .addComponent(pnlAutores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

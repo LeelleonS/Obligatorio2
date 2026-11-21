@@ -2,20 +2,17 @@
 
 package interfaz;
 
-import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
 import dominio.Familia;
 import modelo.Sistema;
 
 public class FrmAltaFamilia extends javax.swing.JFrame implements DocumentListener {
 
-    private String apellidoValido = "[A-Za-zÁÉÍÓÚáéíóúÑñ ]+";
-    private String cedulaValido = "[0-9]+";
-    private String celularValido = "[0-9]+";
+    private static final String APELLIDO_VALIDO = "[A-Za-zÁÉÍÓÚáéíóúÑñÜü' -]+";
+    private static final String CEDULA_VALIDA = "[0-9.-]+";
+    private static final String CELULAR_VALIDO = "[0-9 +()-]+";
     
     private final Sistema sistema;
 
@@ -45,34 +42,14 @@ public class FrmAltaFamilia extends javax.swing.JFrame implements DocumentListen
     }
     
     private void actualizarBoton(){
-        boolean apellidoOk = esValido(txtApellido, apellidoValido);
-        boolean cedulaOk = esValido(txtCedula, cedulaValido);
-        boolean celularOk = esValido(txtCelular, celularValido);
+        boolean apellidoOk = Validaciones.esValido(txtApellido, APELLIDO_VALIDO);
+        boolean cedulaOk = Validaciones.esValido(txtCedula, CEDULA_VALIDA);
+        boolean celularOk = Validaciones.esValido(txtCelular, CELULAR_VALIDO);
         btnAceptar.setEnabled(apellidoOk && cedulaOk && celularOk);
 
-        avisarSiEstaMal(txtApellido, apellidoValido, lblApellidoError, "El apellido solo puede tener letras");
-        avisarSiEstaMal(txtCedula, cedulaValido, lblCedulaError, "La cédula solo puede tener números");
-        avisarSiEstaMal(txtCelular, celularValido, lblCelularError, "El celular solo puede tener números");
-    }
-    
-    private boolean esValido(JTextComponent campo, String regex){
-        boolean ok = campo.getText().trim().matches(regex);
-        if (ok){
-            campo.setForeground(Color.BLACK);
-        }
-        return ok;
-    }
-
-    private void avisarSiEstaMal(JTextComponent campo, String regex, JLabel etiqueta, String mensaje) {
-        String texto = campo.getText().trim();
-        if (!texto.isEmpty() && !texto.matches(regex)) {
-            campo.setForeground(Color.RED);
-            etiqueta.setText(mensaje);
-            etiqueta.setForeground(Color.RED);
-        } else {
-            campo.setForeground(Color.BLACK);
-            etiqueta.setText("");
-        }
+        Validaciones.avisarSiEstaMal(txtApellido, apellidoOk, lblApellidoError, "El apellido solo puede tener letras, espacios, apóstrofos y guiones");
+        Validaciones.avisarSiEstaMal(txtCedula, cedulaOk, lblCedulaError, "La cédula solo puede tener números, puntos y guiones");
+        Validaciones.avisarSiEstaMal(txtCelular, celularOk, lblCelularError, "El celular solo puede tener números, espacios, +, paréntesis y guiones");
     }
 
     @SuppressWarnings("unchecked")
@@ -92,7 +69,7 @@ public class FrmAltaFamilia extends javax.swing.JFrame implements DocumentListen
         lblCelularError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Alta de Familia");
+        setTitle("Alta de familia");
         setResizable(false);
 
         btnAceptar.setBackground(new java.awt.Color(200, 240, 200));
@@ -191,7 +168,7 @@ public class FrmAltaFamilia extends javax.swing.JFrame implements DocumentListen
         try {
             Familia familia = new Familia(txtCedula.getText(), txtApellido.getText(), txtCelular.getText());
             sistema.agregarFamilia(familia);
-            JOptionPane.showMessageDialog(this, "Familia " + familia.getApellido() + " registrada con éxito!","Familia registrada!",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "¡Familia " + familia.getApellido() + " registrada con éxito!", "¡Familia registrada!", JOptionPane.INFORMATION_MESSAGE);
             limpiar();
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
